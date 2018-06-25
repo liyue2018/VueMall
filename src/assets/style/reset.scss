@@ -2,7 +2,7 @@
 * @Author: liyue2018
 * @Date:   2018-06-22 15:03:55
 * @Last Modified by:   liyue2018
-* @Last Modified time: 2018-06-23 12:57:38
+* @Last Modified time: 2018-06-25 00:52:05
 */
 
 // 重置浏览器设置
@@ -11,9 +11,10 @@
     box-sizing: border-box;
 }
 
-body, html, header, nav, footer, form, div, p, ul, li, dl, dt, dd, a, input, span, img, h1,h2,h3 {
+body, html, header, nav, footer, form, div, p, ul, li, dl, dt, dd, ol, a, input,button, span, img, h1,h2,h3,h4,h5,h6,i {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -26,7 +27,7 @@ li {
     list-style-type: none;
 }
 
-input {
+input, button {
     border: none;
     border: 1px solid #ccc;
     outline: none;
@@ -39,5 +40,9 @@ img {
 }
 a {
     text-decoration: none;
+}
+
+i {
+    font-style: normal;
 }
 

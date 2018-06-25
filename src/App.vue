@@ -1,21 +1,22 @@
 <template>
     <div class="main w">
-        <mall-header></mall-header>
-        <div class="content">
-            <h1>hello test </h1>
-        </div>
-        <mall-footer></mall-footer>
+        <!-- <h1>{{ title }}</h1>
+
+        <router-link to="/hello">hello</router-link>
+        <router-link to="/home">home</router-link> -->
+
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
 
-// 导入 home 组件
+// 导入 header 组件
 
-import mallHeader from './common/header.vue'
+// import mallHeader from './common/header.vue'
 // 导入 footer 组件
 
-import mallFooter from './common/footer.vue'
+// import mallFooter from './common/footer.vue'
 
 
 export default {
@@ -23,11 +24,11 @@ export default {
         return {
             title: 'liyue'
         }
-    },
-    components: {
-        'mallHeader': mallHeader,
-        'mallFooter': mallFooter
     }
+    // components: {
+    //     'mallHeader': mallHeader,
+    //     'mallFooter': mallFooter
+    // }
 }
 
 
@@ -41,10 +42,6 @@ export default {
     background: #ededed;
 }
 
-.content {
-    height: 1000px;
-    /* background:  pink; */
-}
 
 
 </style>

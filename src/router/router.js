@@ -1,21 +1,24 @@
-/*
-* @Author: liyue2018
-* @Date:   2018-06-22 15:48:57
-* @Last Modified by:   liyue2018
-* @Last Modified time: 2018-06-22 15:49:14
-*/
 import VueRouter from 'vue-router'
 
-import home from './common/home.vue'
-
-import footer from './common/footer.vue'
-
-
+import Home from '../pages/home/home.vue'
+import Login from '../pages/login/login.vue'
+import Goods from '../pages/goods/goods.vue'
+import Index from '../pages/index.vue'
+import GoodsDetail from '../pages/goods/goodsDetail.vue'
 
 var router = new VueRouter({
     routes: [
-        { path: '/home', component: home },
-        { path: '/footer', component: footer }
+        { 
+            path: '/', 
+            component: Index, 
+            redirect: '/home',
+            children: [
+                { path: 'home', component: Home },
+                { path: 'goods', component: Goods },
+                { path: 'goodsDetails/:id', component: GoodsDetail }
+            ]
+        },
+        { path: '/login', component: Login}
     ]
 })
 
