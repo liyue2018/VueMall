@@ -2,7 +2,7 @@
 * @Author: yongze-chen
 * @Date:   2018-06-20 10:56:57
 * @Last Modified by:   liyue2018
-* @Last Modified time: 2018-06-25 17:06:33
+* @Last Modified time: 2018-06-26 09:29:46
 */
 
 import Vue from 'vue'
@@ -30,10 +30,6 @@ import router from './router/router.js'
 import $ from 'jquery'
 
 import app from './App.vue'
-
-import '../node_modules/swiper/dist/css/swiper.css'
-
-
 
 var vm = new Vue({
     el: '#app',
