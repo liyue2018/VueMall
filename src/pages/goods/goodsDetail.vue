@@ -25,10 +25,10 @@
             </div>
             <div class="info-box">
                 <div class="goods-info">
-                    <h4 class="name">FIIL Driifter 脖挂蓝牙耳机</h4>
+                    <h4 class="name">{{ product.productName }}</h4>
                     <h6 class="title">
-                        <span>FIIL Driifter 脖挂蓝牙耳机</span>
-                        <span class="price">￥<i>499.00</i></span>
+                        <span>{{ product.productTitle }}</span>
+                        <span class="price">￥<i>{{ product.productPrice }}</i></span>
                     </h6>
                 </div>
                 <div class="num-count">
@@ -63,14 +63,13 @@
                 productNum: 1,
                 downDisable: true,
                 bigImgUrl: '/assets/images/product-detail01.jpg',
-                detailImgUrl: '/assets/images/big-product-detail01.jpg',
+                detailImgUrl: '',
                 product:''
             }
         },
         created() {
-            // console.log(this.$route.query.productId);
-            console.log(this.$route.query);
-
+            // 获取本地存储中的商品信息
+            this.getLocalProduct();
         },
         mounted() {
             this.changeImg();
@@ -108,6 +107,12 @@
                         $(this).addClass('on').siblings().removeClass('on');
                         that.bigImgUrl = $(this).find('img')[0].src;
                     })
+            },
+            getLocalProduct() {
+                // 从本地请求商品数据
+                this.product = JSON.parse(localStorage.getItem('products'));
+                this.bigImgUrl = this.product.productImgUrl;
+                console.log(this.product);
             }
         }
     }

@@ -2,7 +2,7 @@
     <div>
         <div v-for="(item,i) in product" :key="i" class="product-box">
             <router-link :to="{ path:'/goodsDetails',query:{productId: item.id}}" tag="div" class="product-box-item">
-                <div class="item-img">
+                <div class="item-img"  @mouseenter="getProductData(item.id)">
                     <img src="" v-lazy="item.productImgUrl" alt="">
                     <h4>{{ item.productName }}</h4>
                     <h6 class="product-info">{{ item.productTitle }}</h6>
@@ -24,29 +24,30 @@
     export default {
         data: function() {
             return {
-                
+                productItem: '',
+                productId: ''
             }
         },
         created() {
-
+            this.getProductData();
         },
         mounted() {
-            // this.getProductData()
+            
         },
         methods: {
-            // getProductData(id) {
-            //     // 遍历产品数组
+            getProductData(id) {
+                this.product.forEach((item,i) => {
+                    if (item.id == id) {
+                        this.productItem = item;
+                        return true;
+                    }
+                });
+                console.log(this.productItem);
+                
+                // 将该商品保存至本地存储
 
-            //     console.log(this.product);
-
-            //     this.product.some((item,i) => {
-            //         if (item.id == id) {
-            //             this.product.splice(i,1);
-            //             return true;
-            //         }
-            //     })
-            //     console.log(this.product);
-            // }
+                localStorage.setItem('products', JSON.stringify(this.productItem));
+            }
 
 
         },
