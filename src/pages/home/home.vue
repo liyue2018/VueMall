@@ -127,8 +127,6 @@
 
 <script>
 
-import mallGoods from './mallGoods.vue';
-
 import product from '../components/product.vue'
 
 import $ from 'jquery';
@@ -208,7 +206,6 @@ var count = 0;
     .main-content {
         overflow: hidden;
         margin-top: 20px;
-        // background: #fff;
         .swiper {
             position: relative;
             transition: all 0.5s ease;

@@ -49,7 +49,6 @@
     export default {
         data: function () {
             return {
-                msg: 'hi'
             }
         },
         created () {

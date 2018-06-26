@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="(item,i) in product" :key="i" class="product-box">
-            <div class="product-box-item">
+            <router-link :to="{ path:'/goodsDetails',query:{productId: item.id}}" tag="div" class="product-box-item">
                 <div class="item-img">
                     <img src="" v-lazy="item.productImgUrl" alt="">
                     <h4>{{ item.productName }}</h4>
@@ -14,7 +14,7 @@
                 <button class="btn-default">
                     查看详情
                 </button>
-            </div>
+            </router-link>
         </div>
     </div>
     
@@ -24,12 +24,29 @@
     export default {
         data: function() {
             return {
+                
             }
         },
         created() {
 
         },
+        mounted() {
+            // this.getProductData()
+        },
         methods: {
+            // getProductData(id) {
+            //     // 遍历产品数组
+
+            //     console.log(this.product);
+
+            //     this.product.some((item,i) => {
+            //         if (item.id == id) {
+            //             this.product.splice(i,1);
+            //             return true;
+            //         }
+            //     })
+            //     console.log(this.product);
+            // }
 
 
         },

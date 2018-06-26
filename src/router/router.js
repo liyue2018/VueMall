@@ -15,7 +15,7 @@ var router = new VueRouter({
             children: [
                 { path: 'home', component: Home },
                 { path: 'goods', component: Goods },
-                { path: 'goodsDetails/:id', component: GoodsDetail }
+                { path: 'goodsDetails', component: GoodsDetail }
             ]
         },
         { path: '/login', component: Login}

@@ -63,11 +63,13 @@
                 productNum: 1,
                 downDisable: true,
                 bigImgUrl: '/assets/images/product-detail01.jpg',
-                detailImgUrl: '/assets/images/big-product-detail01.jpg'
+                detailImgUrl: '/assets/images/big-product-detail01.jpg',
+                product:''
             }
         },
         created() {
-            
+            // console.log(this.$route.query.productId);
+            console.log(this.$route.query);
 
         },
         mounted() {
@@ -103,10 +105,8 @@
                     var that = this;
 
                     $(imgList).on('click','li', function() {
-                        console.log(this)
                         $(this).addClass('on').siblings().removeClass('on');
                         that.bigImgUrl = $(this).find('img')[0].src;
-                        console.log(that.bigImgUrl);
                     })
             }
         }
