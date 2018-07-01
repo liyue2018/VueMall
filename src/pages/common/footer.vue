@@ -1,60 +1,62 @@
 <template>
     <div class="footer">
-        <div class="links">
-            <dl class="links-list">
-                <dt>订单服务</dt>
-                <dd>购买指南</dd>
-                <dd>支付方式</dd>
-                <dd>送货政策</dd>
-            </dl>
-            <dl class="links-list">
-                <dt>订单服务</dt>
-                <dd>购买指南</dd>
-                <dd>支付方式</dd>
-                <dd>送货政策</dd>
-            </dl>
-            <dl class="links-list">
-                <dt>订单服务</dt>
-                <dd>购买指南</dd>
-                <dd>支付方式</dd>
-                <dd>送货政策</dd>
-            </dl>
-            <dl class="links-list">
-                <dt>订单服务</dt>
-                <dd>购买指南</dd>
-                <dd>支付方式</dd>
-                <dd>送货政策</dd>
-            </dl>
-            <dl class="links-list">
-                <dt>订单服务</dt>
-                <dd>购买指南</dd>
-                <dd>支付方式</dd>
-                <dd>送货政策</dd>
-            </dl>
-            <dl class="links-list">
-                <dt>订单服务</dt>
-                <dd>购买指南</dd>
-                <dd>支付方式</dd>
-                <dd>送货政策</dd>
-            </dl>
-            <div class="contact">
-                <a class="tel">1247856097</a>
-                <p>周一至周日 9:00-18:00（仅收市话费）</p>
-                <a href="#" class="button help-btn">在线帮助</a>
+        <div class="w">
+             <div class="links">
+                <dl class="links-list">
+                    <dt>订单服务</dt>
+                    <dd>购买指南</dd>
+                    <dd>支付方式</dd>
+                    <dd>送货政策</dd>
+                </dl>
+                <dl class="links-list">
+                    <dt>订单服务</dt>
+                    <dd>购买指南</dd>
+                    <dd>支付方式</dd>
+                    <dd>送货政策</dd>
+                </dl>
+                <dl class="links-list">
+                    <dt>订单服务</dt>
+                    <dd>购买指南</dd>
+                    <dd>支付方式</dd>
+                    <dd>送货政策</dd>
+                </dl>
+                <dl class="links-list">
+                    <dt>订单服务</dt>
+                    <dd>购买指南</dd>
+                    <dd>支付方式</dd>
+                    <dd>送货政策</dd>
+                </dl>
+                <dl class="links-list">
+                    <dt>订单服务</dt>
+                    <dd>购买指南</dd>
+                    <dd>支付方式</dd>
+                    <dd>送货政策</dd>
+                </dl>
+                <dl class="links-list">
+                    <dt>订单服务</dt>
+                    <dd>购买指南</dd>
+                    <dd>支付方式</dd>
+                    <dd>送货政策</dd>
+                </dl>
+                <div class="contact">
+                    <a class="tel">1247856097</a>
+                    <p>周一至周日 9:00-18:00（仅收市话费）</p>
+                    <a href="#" class="button help-btn">在线帮助</a>
+                </div>
             </div>
-        </div>
-        <div class="copyright">
-            <p>
-                Copyright © , Smartisan Digital Co., Ltd. All Rights Reserved.北京锤子数码科技有限公司
-                <a href="#">法律声明</a>
-                <a href="#">法律声明</a>
-                <a href="#">法律声明</a>
-            </p>
-        </div>
-        <div class="cop">
-            <span>京ICP备14041720号-1</span>
-            <span>京ICP证140622号</span>
-            <span>京公网安备11010502025474</span>
+            <div class="copyright">
+                <p>
+                    Copyright © , Smartisan Digital Co., Ltd. All Rights Reserved.北京锤子数码科技有限公司
+                    <a href="#">法律声明</a>
+                    <a href="#">法律声明</a>
+                    <a href="#">法律声明</a>
+                </p>
+            </div>
+            <div class="cop">
+                <span>京ICP备14041720号-1</span>
+                <span>京ICP证140622号</span>
+                <span>京公网安备11010502025474</span>
+            </div>
         </div>
     </div>
 </template>

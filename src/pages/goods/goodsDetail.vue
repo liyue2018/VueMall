@@ -1,22 +1,22 @@
 <template>
-    <div class="goods-detail">
+    <div class="goods-detail w">
         <div class="goods-panel clearfix">
             <div class="img-box">
                 <ul class="small-img" ref="imgList">
                     <li class="item on">
-                        <img src="/assets/images/product-detail01.jpg" alt="">
+                        <img src="/static/images/product-detail01.jpg" alt="">
                     </li>
                     <li class="item">
-                        <img src="/assets/images/product-detail02.jpg" alt="">
+                        <img src="/static/images/product-detail02.jpg" alt="">
                     </li>
                     <li class="item">
-                        <img src="/assets/images/product-detail03.jpg" alt="">
+                        <img src="/static/images/product-detail03.jpg" alt="">
                     </li>
                     <li class="item">
-                        <img src="/assets/images/product-detail04.jpg" alt="">
+                        <img src="/static/images/product-detail04.jpg" alt="">
                     </li>
                     <li class="item">
-                        <img src="/assets/images/product-detail05.jpg" alt="">
+                        <img src="/static/images/product-detail05.jpg" alt="">
                     </li>
                 </ul>
                 <div class="big-img">
@@ -31,11 +31,10 @@
                         <span class="price">￥<i>{{ product.productPrice }}</i></span>
                     </h6>
                 </div>
-                <div class="num-count">
+                
+                <div class="buy-num">
                     <span>数量</span>
-                    <button type="button" class="count-down" :class="{'down-disabled': downDisable}" @click="countDown" ref="down">-</button>
-                    <span class="num" v-model="productNum">{{ productNum }}</span>
-                    <button type="button" class="count-up" @click="countUp">+</button>
+                    <buynum style="margin-left: 50px"></buynum>
                 </div>
                 <div class="buttons">
                     <input type="button" name="" value="现在购买" readonly="readonly" />
@@ -56,14 +55,13 @@
 
 <script>
 
-    import $ from 'jquery';
+    import $ from 'jquery'
+    import buynum from '../components/buynum.vue'
     export default {
         data: function () {
             return {
-                productNum: 1,
-                downDisable: true,
-                bigImgUrl: '/assets/images/product-detail01.jpg',
-                detailImgUrl: '',
+                bigImgUrl: '',
+                detailImgUrl: '/static/images/big-product-detail01.jpg',
                 product:''
             }
         },
@@ -75,31 +73,9 @@
             this.changeImg();
         },
         methods: {
-            countDown() {
-                var down = this.$refs.down;
-                if (this.productNum == 1) {
-                    this.downDisable = 'true';
-                    this.productNum = 1;
-
-                } else {
-                    if (this.downDisable) {
-                        this.downDisable = !this.downDisable;
-                    }
-                    this.productNum --;
-                }
-            },
-            countUp() {
-                this.productNum ++;
-                if (this.downDisable) {
-                    this.downDisable = !this.downDisable;
-                }
-            },
+           
             // 点击小图片切换对应的大图片
             changeImg() {
-
-                    // this.bigImgUrl = this.$refs.bigImgUrl.src;
-                    // console.log(this.bigImgUrl)
-
                     var imgList = this.$refs.imgList;
                     var that = this;
 
@@ -112,17 +88,18 @@
                 // 从本地请求商品数据
                 this.product = JSON.parse(localStorage.getItem('products'));
                 this.bigImgUrl = this.product.productImgUrl;
-                console.log(this.product);
             }
+        },
+        components: {
+            buynum
         }
     }
 </script>
 
-<style lang="scss" rel="stylesheet/scss">
+<style lang="scss" rel="stylesheet/scss" scoped>
     .goods-detail {
-        margin: 10px 0;
         overflow: hidden;
-        margin-bottom: 60px;
+        margin: 20px auto 50px;
     }
     .goods-panel {
         height: 600px;
@@ -196,24 +173,17 @@
                     }
                 }
             }
-            .num-count {
-                color: #8d8d8d; 
+            .buy-num {
+                position: relative; 
                 margin: 30px 0;
-                button {
-                    width: 24px; 
-                    height: 24px; 
-                    line-height: 0.8; 
-                    border-radius: 50%;
-                    box-shadow: 1px 1px 14px 1px rgba(0, 0, 0, 0.2); 
-                    color: rgba(0,0,0,.7);
-                    margin: 0 15px;
-                    font-size: 18px;
-                }
-                .down-disabled {
-                    cursor: not-allowed;
-                    opacity: 0.5;
+                span {
+                    position: absolute; 
+                    left: 0; 
+                    top: 2px; 
+                    color: #999;
                 }
             }
+            
             .buttons {
                 padding-top: 30px; 
                 border-top: 1px solid #ddd;

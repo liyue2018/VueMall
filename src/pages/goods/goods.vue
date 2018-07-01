@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 排序开始 -->
-        <div class="sort-box">
+        <div class="sort-box w">
             <a href="javascript:;" class="active">综合排序</a>
             <a href="javascript:;">价格从低到高</a>
             <a href="javascript:;">价格从高到低</a>
@@ -13,7 +13,7 @@
             </div>
         </div>
         <!-- 排序结束 -->
-        <div class="goods">
+        <div class="goods w">
             <product :product='goodsList'></product>
         </div>
     </div>
@@ -34,12 +34,8 @@ import product from '../components/product.vue';
             // 获取商品数据
 
             getAllGoods() {
-                this.$http.get('../../../static/hotData.json').then((res) => {
-                    var arr1 = res.body.hotData.data;
-                    var arr2 = res.body.choiceData.data;
-                    var arr3 = res.body.brandData.data;
-                    var arr4 = res.body.wellChosenData.data;
-                    this.goodsList = arr1.concat(arr2,arr3,arr4);
+                this.$http.get('../../../static/js/productData.json').then((res) => {
+                    this.goodsList = res.body;
                 }, err => {
                     console.log(err)
                 })
@@ -57,6 +53,7 @@ import product from '../components/product.vue';
         height: 70px; 
         line-height: 70px; 
         padding-left: 10px;
+        // margin-top: 20px;
         a {
             color: #999;
             display: inline-block; 
@@ -103,6 +100,7 @@ import product from '../components/product.vue';
         overflow: hidden;
         padding: 7px 0;
         background: #fff;
+        border-radius: 5px;
         .product-box {
             height: 430px;
             float: left;

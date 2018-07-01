@@ -1,17 +1,17 @@
 <template>
     <div>
-        <div class="main-content">
+        <div class="main-content w">
             <!-- 轮播图开始 -->
             <div class="swiper" @mouseenter='stop' @mouseleave='start'>
                 <div class="swiper-container">
                     <div class="swiper-item">
                         <a href="#">
-                            <img src="/assets/images/banner01.jpeg" alt="">
+                            <img src="/static/images/banner01.jpeg" alt="">
                         </a>
                     </div>
                     <div class="swiper-item">
                         <a href="#">
-                            <img src="/assets/images/banner02.png" alt="">
+                            <img src="/static/images/banner02.png" alt="">
                         </a>
                     </div>
                 </div>
@@ -31,22 +31,22 @@
             <!-- 商品导航开始 -->
             <ul class="product-nav">
                 <li class="item">
-                    <img src="/assets/images/product-nav01.jpg" alt="">
+                    <img src="/static/images/product-nav01.jpg" alt="">
                     <a href="#">
                     </a>
                 </li>
                 <li class="item">
-                    <img src="/assets/images/product-nav02.jpg" alt="">
+                    <img src="/static/images/product-nav02.jpg" alt="">
                     <a href="#">
                     </a>
                 </li>
                 <li class="item">
-                    <img src="/assets/images/product-nav03.png" alt="">
+                    <img src="/static/images/product-nav03.png" alt="">
                     <a href="#">
                     </a>
                 </li>
                 <li class="item">
-                    <img src="/assets/images/product-nav04.jpg" alt="">
+                    <img src="/static/images/product-nav04.jpg" alt="">
                     <a href="#">
                     </a>
                 </li>
@@ -54,68 +54,67 @@
             <!-- 商品导航结束 -->
 
             <!-- 热门商品开始 -->
-            <div class="panel hot">
-                <h2 class="title">{{ hotP.title }}</h2>
-                <div class="content">
-                    <product :product="hotP.data"></product>
+            <panel :title="hotTitle">
+                <div slot="content">
+                    <product :product="hotP"></product>
                 </div>
-            </div>
+            </panel>
             <!-- 热门商品结束 -->
             <!-- 官方精选开始 -->
-            <div class="panel choice">
-                <h2 class="title">{{ choiceP.title }}</h2>
-                <div class="content">
+
+            <panel :title="choiceTitle">
+                <div slot="content" class="content">
                     <div class="imgbanner">
-                        <img src="" v-lazy="choiceP.imgbanner" alt="">
+                        <img src="" v-lazy="choiceImg" alt="">
                         <a href="#" class="link-cover"></a>
                     </div>
-                    <product :product="choiceP.data"></product>
+                    <product :product="choiceP"></product>
                 </div>
-            </div>
+            </panel>
             <!-- 官方精选结束 -->
             <!-- 品牌周边开始 -->
-            <div class="panel choice">
-                <h2 class="title">{{ brandP.title }}</h2>
-                <div class="content">
-                    <div class="imgbanner">
-                        <img src="" v-lazy="brandP.imgbanner" alt="">
+
+            <panel :title="brandTitle">
+                <div slot="content" class="content">
+                     <div class="imgbanner">
+                        <img src="" v-lazy="brandImg" alt="">
                         <a href="#" class="link-cover"></a>
                     </div>
-                    <product :product="brandP.data"></product>
+                    <product :product="brandP"></product>
                 </div>
-            </div>
+            </panel>
             <!-- 品牌周边结束 -->
             <!-- 品牌精选开始 -->
-            <div class="panel choice">
-                <h2 class="title">{{ wellChosenP.title }}</h2>
-                <div class="content">
+
+            <panel :title="wellChosenTitle">
+                <div slot="content" class="content">
                     <div class="imgbanner">
-                        <img src="" v-lazy="wellChosenP.imgbanner" alt="">
+                        <img src="" v-lazy="wellChosenImg" alt="">
                         <a href="#" class="link-cover"></a>
                     </div>
-                    <product :product="wellChosenP.data"></product>
+                    <product :product="wellChosenP"></product>
                 </div>
-            </div>
+            </panel>
             <!-- 品牌精选结束 -->
             <!-- 商品导航开始 -->
             <ul class="product-nav">
                 <li class="item">
-                    <img src="/assets/images/product-nav01.jpg" alt="">
+                    <img src="/static/images/product-nav01.jpg" alt="">
                     <a href="#">
                     </a>
                 </li>
                 <li class="item">
-                    <img src="/assets/images/product-nav02.jpg" alt="">
+                    <img src="/static/images/product-nav02.jpg" alt="">
                     <a href="#">
                     </a>
                 </li>
                 <li class="item">
-                    <img src="/assets/images/product-nav03.png" alt="">
+                    <img src="/static/images/product-nav03.png" alt="">
                     <a href="#">
                     </a>
                 </li>
                 <li class="item">
-                    <img src="/assets/images/product-nav04.jpg" alt="">
+                    <img src="/static/images/product-nav04.jpg" alt="">
                     <a href="#">
                     </a>
                 </li>
@@ -126,6 +125,8 @@
 </template>
 
 <script>
+
+import panel from '../components/panel.vue'
 
 import product from '../components/product.vue'
 
@@ -139,8 +140,16 @@ var count = 0;
                 timerId: null,
                 hotP: [],
                 choiceP: [],
+                choiceImg: '/static/images/choice.jpg',
                 brandP: [],
-                wellChosenP: []
+                brandImg: '/static/images/brand01.jpg', 
+                wellChosenP: [],
+                wellChosenImg: '/static/images/brand02.jpg',
+                hotTitle: '热门商品',
+                choiceTitle: '官方精选',
+                brandTitle: '品牌周边',
+                wellChosenTitle: '品牌精选'
+
             }
         },
         created() {
@@ -184,11 +193,12 @@ var count = 0;
             // 获取首页商品的数据
 
             getProductData() {
-                this.$http.get('../../../static/hotData.json').then((Response) => {
-                    this.hotP = Response.body.hotData;
-                    this.choiceP = Response.body.choiceData;
-                    this.brandP = Response.body.brandData;
-                    this.wellChosenP = Response.body.wellChosenData;
+                this.$http.get('../../../static/js/productData.json').then((res) => {
+                    var products = res.body;
+                    this.hotP = products.slice(0,4);
+                    this.choiceP = products.slice(4,10);
+                    this.brandP = products.slice(10,16);
+                    this.wellChosenP = products.slice(16, 22);
                 }, err => {
                     console.log(err)
                 });
@@ -196,7 +206,8 @@ var count = 0;
 
         },
         components: {
-            product
+            product,
+            panel
         }
     }
 </script>
@@ -209,6 +220,9 @@ var count = 0;
         .swiper {
             position: relative;
             transition: all 0.5s ease;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 20px;
         }
         .swiper-container {
             height: 460px; 
@@ -301,43 +315,28 @@ var count = 0;
             }
 
         }
-        .panel {
-            margin-bottom: 40px; 
-            overflow: hidden;
+        .content {
+            height: 430px; 
             background: #fff;
-            h2.title {
-                background: linear-gradient(#fbfbfb,#ececec);
-                height: 60px; 
-                line-height: 60px; 
-                padding-left: 20px;
-                font-size: 18px; 
-                font-weight: 400;
-                border: 1px solid #d4d4d4;
-                border-radius: 8px; 
-            }
-            .content {
-                height: 430px; 
-                background: #fff;
-                .imgbanner {
-                    position: relative;
-                    width: 609px; 
-                    height: 100%; 
-                    float: left;
-                    img {
-                        width: 100%; 
-                        height: 100%;
-                    }
-                    > a {
-                        height: 100%;
-                        width: 100%;
-                        display: block;
-                        position: absolute; 
-                        top: 0; 
-                        left: 0;
-                        border-right: 1px solid #ddd;
-                        &:hover {
-                            box-shadow: 1px 1px 8px 3px rgba(0,0,0,0.1) inset;
-                        }
+            .imgbanner {
+                position: relative;
+                width: 609px; 
+                height: 100%; 
+                float: left;
+                img {
+                    width: 100%; 
+                    height: 100%;
+                }
+                > a {
+                    height: 100%;
+                    width: 100%;
+                    display: block;
+                    position: absolute; 
+                    top: 0; 
+                    left: 0;
+                    border-right: 1px solid #ddd;
+                    &:hover {
+                        box-shadow: 1px 1px 8px 3px rgba(0,0,0,0.1) inset;
                     }
                 }
             }

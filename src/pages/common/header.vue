@@ -1,17 +1,17 @@
 <template>
     <div class="header-container">
         <!-- 顶部logo开始 -->
-        <header class="top-header">
+        <header class="top-header w">
             <div class="logo fl">
                 <span class="iconfont icon-RFQ-filling icon-logo"></span>
             </div>
             <div class="search-box fr">
-                <form class="search-form">
-                    <div>
-                        <label><input type="text" name="search-info" value="" placeholder="请输入商品信息"></label>
-                        <a href="javascript:;"><span class="iconfont icon-search"></span></a>
+                <!-- <form class="search-form"> -->
+                    <div class="search-form">
+                        <label><input type="text" name="search" value="" placeholder="请输入商品信息" v-model="keywords" @keyup.enter="setkeywords(keywords)"></label>
+                        <router-link :to="{ path:'/search',query:{key: keywords}}"><span class="iconfont icon-search"></span></router-link>
                     </div>
-                </form>
+                <!-- </form> -->
                 <ul class="nav-list fl">
                     <li>
                         <router-link to="/goods">全部商品</router-link>
@@ -24,17 +24,17 @@
                     <router-link to="/login" class="user">
                         <span class="iconfont icon-account"></span>
                     </router-link>
-                    <a href="#" class="cart">
+                    <router-link to="/cart" class="cart">
                         <span class="iconfont icon-cart"></span>
                         <span class="iconnum">0</span>
-                    </a>
+                    </router-link>
                 </div>
             </div>
         </header>
         <!-- 顶部logo结束 -->
         <!-- 顶部导航开始 -->
         <nav class="nav">
-            <ul class="nav-list">
+            <ul class="nav-list w">
                 <li><router-link to="/home">首页</router-link></li>
                 <li><router-link to="/goods">全部商品</router-link></li>
                 <li><a href="javascript:;">品牌周边</a></li>
@@ -49,10 +49,14 @@
     export default {
         data: function () {
             return {
+                keywords: ''
             }
         },
         created () {
             this.windowScroll();
+        },
+        mounted() {
+            // this.setkeywords();
         },
         methods: {
             // 导航栏吸顶事件
@@ -80,23 +84,29 @@
                         cart.classList.remove('slide');
                     }
                 })
+            },
+            setkeywords(keywords) {
+                location.href = '/#/search?key=' + keywords;
+
+                // localStorage.setItem('keywords',JSON.stringify(this.keywords));
             }
         }
+        // props: ['flag']
     }
 </script>
 
 
 <style scoped lang="scss" rel="stylesheet/scss">
     .header-container {
-
+        width: 100%;
+        background: #333;
         // 顶部logo部分
 
         .top-header {
-            height: 64px;
-            line-height: 64px;
-            background: #333;
+            height: 100%;
             color: #c8c8c8;
-            padding: 2px 20px;
+            height: 100px;
+            line-height: 100px;
             .logo {
                 height: 46px;
                 .icon-logo {
@@ -109,7 +119,7 @@
                     float: left;
                     position: relative;
                     margin-right: 40px;
-                    input[name="search-info"] {
+                    input[name="search"] {
                         width: 250px;
                         height: 34px;
                         padding: 4px 8px;
@@ -161,7 +171,7 @@
                             border-radius: 50%;
                             font-size: 12px;
                             position: absolute; 
-                            top: 16px;
+                            top: 35px;
                             left: 9px;
                             line-height: 15px;
                             text-align: center;
@@ -173,7 +183,7 @@
                 .cart-box.slide {
                         position: fixed;
                         right: 20px; 
-                        top: 6px;
+                        top: -14px;
                         z-index: 4;
                         transition: all 0.2s ease-in-out;
                         a {
@@ -186,35 +196,44 @@
         .nav {
             width: 100%;
             height: 70px; 
-            line-height: 70px; 
+            line-height: 50px; 
             background: #f7f7f7;
             box-shadow: 0 2px 4px rgba(0,0,0,.04);
             width: 100%;
             transition: all 0.2s ease-in-out;
             .nav-list {
                 height: 100%; 
-                padding-left: 10px;
+                padding: 10px 0; 
                 li {
                     height: 100%;
-                    width: 80px;
+                    width: 100px;
                     float: left;
+                    margin: 0 10px;
                     a {
                         display: block;
+                        height: 100%;
                         width: 100%; 
                         text-align: center;
                         position: relative;
                         color: #666;
-                        &:before {
-                            content: ''; 
-                            width: 4px; 
-                            height: 4px; 
-                            border-radius: 50%;
-                            background: #dbdbdb;
-                            position: absolute; 
-                            top: 33px; 
-                            left: 0;
-                        }
+                        // &:before {
+                        //     content: ''; 
+                        //     width: 4px; 
+                        //     height: 4px; 
+                        //     border-radius: 50%;
+                        //     background: #dbdbdb;
+                        //     position: absolute; 
+                        //     top: 33px; 
+                        //     left: 0;
+                        // }
+
                     }
+                    a.active {
+                        color: #b37272;
+                        background: #dcdcdc;
+                        border-radius: 5px;
+                    }
+
                 }
             }
         }
