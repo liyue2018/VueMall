@@ -187,7 +187,7 @@ var count = 0;
                 clearInterval(this.timerId);
             },
             start() {
-                setInterval(this.auto, 2000);
+                setInterval(this.auto, 3000);
             },
 
             // 获取首页商品的数据
@@ -197,6 +197,7 @@ var count = 0;
                     var products = res.body;
                     this.hotP = products.slice(0,4);
                     this.choiceP = products.slice(4,10);
+                    console.log(this.choiceP);
                     this.brandP = products.slice(10,16);
                     this.wellChosenP = products.slice(16, 22);
                 }, err => {
@@ -316,7 +317,6 @@ var count = 0;
 
         }
         .content {
-            height: 430px; 
             background: #fff;
             .imgbanner {
                 position: relative;

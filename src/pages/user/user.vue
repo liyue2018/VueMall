@@ -30,7 +30,7 @@
             </div>
             <div class="main-content">
                 <transition mode="out-in" tag="div">
-                    <router-view class="user-panel"></router-view>
+                    <router-view class="user-panel" @getImg="getImgUrl"></router-view>
                 </transition>
             </div>
         </div>
@@ -46,7 +46,6 @@
         data: function () {
             return {
                 imgUrl: ''
-
             }
         },
         created() {
@@ -56,7 +55,30 @@
             getImgUrl() {
                 this.imgUrl = JSON.parse(localStorage.getItem('submitImgUrl'));
             }
+        },
+        watch: {
+            '$route.path': function(newVal, oldVal) {
+                switch(newVal) {
+                    case '/user/orderList':
+                        console.log('欢迎进入我的订单页面')
+                        break;
+                    case '/user/information':
+                        console.log('欢迎进入账户资料页面');
+                        break;
+                    case '/user/addressList':
+                        console.log('欢迎进入收货地址页面');
+                        break;
+                    case '/user/coupon':
+                        console.log('欢迎进入我的优惠页面')
+                        break;
+                    case '/user/coupon':
+                        console.log('欢迎进入售后服务页面')
+                        break;
 
+                    default:
+                    console.log('欢迎进入以旧换新页面');
+                }
+            }
         },
         components: {
             "mallHeader": mallHeader,
@@ -68,9 +90,10 @@
 <style lang="scss" rel="stylesheet/scss">
     .user-header {
         height: 100px;
-        overflow-y: hidden;
+        // overflow-y: hidden;
         .nav {
             opacity: 0;
+            height: 0;
 
         }
         .top-header .search-box {
@@ -146,7 +169,7 @@
         .v-enter, 
         .v-leave-to {
             opacity: 0; 
-            transform: translateX(80px);
+            transform: translateY(80px);
         }
 
         .v-enter-active, 

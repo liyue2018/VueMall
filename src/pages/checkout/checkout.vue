@@ -38,35 +38,31 @@
                         <span>单价</span>
                         <span>数量</span>
                         <span>小计</span>
-                        <span>操作</span>
                     </p>
                 </div>
-
-                <div class="cart-table">
-                    <div class="items-choose">
-                        <div class="items-img">
-                            <img src="/static/images/product01.png" alt="" />
+                <div>
+                    <div class="cart-table" v-for="item in $store.getters.getSelectedGoods" :key="item.id">
+                        <div class="items-choose">
+                            <div class="items-img">
+                                <img :src="item.productImgUrl" alt="" />
+                            </div>
+                            <div>
+                                <a href="#" class="items-name">{{ item.productName }}</a>
+                            </div>
                         </div>
-                        <div>
-                            <a href="#" class="items-name">Smartisan T恤 伍迪·艾伦出生</a>
-                        </div>
-                    </div>
-                    <div class="fr items-info">
-                        <div>￥149</div>
-                        <div>
-                            2
-                        </div>
-                        <div>￥298</div>
-                        <div>
-                            <a href="javascript" class="iconfont icon-wrong items-del-btn"></a>
+                        <div class="fr items-info">
+                            <div>￥{{ item.productPrice }}</div>
+                            <div>
+                                {{ item.count }}
+                            </div>
+                            <div>￥{{ item.productPrice * item.count }}</div>
                         </div>
                     </div>
                 </div>
-
                 <div class="cart-bottom clearfix">
                     <div class="fr shopping">
                         <div class="shopping-total shopping-price">
-                            <h4 class="">应付总额: <span class="price">￥1171</span></h4>
+                            <h4 class="">应付总额: <span class="price">￥{{ $store.getters.getTotal.amount }}</span></h4>
                             <h6 class="shopping-tips">应付总额不含运费</h6>
                         </div>
                         <div class="fl">
@@ -128,7 +124,7 @@ import panel from '../components/panel.vue'
                         return true;
                     }
                 });
-                console.log(this.addressList);
+                // console.log(this.addressList);
                 localStorage.setItem('address',JSON.stringify(this.addressList));
             },
             // 默认值检查
@@ -160,26 +156,6 @@ import panel from '../components/panel.vue'
             z-index: -1!important;
         }
     }
-    // .shopping-panel {
-    //     margin-top: 30px;
-    //     z-index: 5;
-    //     position: relative;
-    //     padding-bottom: 91px;
-        // .title {
-        //     height: 60px; 
-        //     line-height: 60px; 
-        //     border: 1px solid #d4d4d4; 
-        //     background: #f3f3f3; 
-        //     background: linear-gradient(#fbfbfb,#ececec); 
-        //     padding-left: 20px; 
-        //     box-shadow: 0 9px 4px -8px rgba(0, 0, 0, 0.1);
-        //     font-size: 18px; 
-        //     font-weight: 400;
-        //     color: #333;
-        //     border-radius: 4px;
-        // }
-    // }
-
     // 收货信息
 
     .address-info {
@@ -325,11 +301,12 @@ import panel from '../components/panel.vue'
 
         }
         .cart-table {
-            height: 180px; 
+            height: 140px; 
             line-height: 6;
             background: #fff;
             padding-top: 26px;
             padding-left: 26px;
+            border: 1px solid #eee;
             .items-choose {
                 float: left;
                 >div {

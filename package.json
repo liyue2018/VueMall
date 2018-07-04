@@ -17,7 +17,9 @@
     "url": "https://github.com/liyue2018/VueMall/issues"
   },
   "homepage": "https://github.com/liyue2018/VueMall#readme",
-  "dependencies": {},
+  "dependencies": {
+    "vuex": "^3.0.1"
+  },
   "devDependencies": {
     "@babel/helper-module-imports": "^7.0.0-beta.51",
     "babel-core": "^6.26.3",

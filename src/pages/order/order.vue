@@ -13,8 +13,8 @@
                         请于 01 分 18 秒 内支付
                     </div> -->
                     <div class="payment-info">
-                        <span>订单金额:<em>￥1.00</em></span>
-                        <span>实际应付金额:<em>￥1.00</em></span>
+                        <span>订单金额:<em>￥{{ $store.getters.getTotal.amount }}</em></span>
+                        <span>实际应付金额:<em>￥{{ $store.getters.getTotal.amount }}</em></span>
                         <button type="button" disabled="disabled" class="disabled-btn">立即支付</button>
                     </div>
                 </div>
@@ -38,19 +38,21 @@
                         <span>小计</span>
                     </div>
                 </div>
-                <div class="body">
-                    <span>支付测试商品 IPhone X 全面屏 全面绽放</span>
-                    <div class="fr">
-                        <span>￥1.00</span>
-                        <span>2</span>
-                        <span>￥2.00</span>
+                <div>
+                    <div class="body" v-for="item in $store.getters.getSelectedGoods">
+                        <span>{{ item.productName }}</span>
+                        <div class="fr">
+                            <span>￥{{ item.productPrice }}</span>
+                            <span>{{ item.count }}</span>
+                            <span>￥{{ item.productPrice * item.count }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="order-discount-line">
                 <p class="price-total">
                     <span>商品总计：</span>
-                    <span>¥ 2700</span>
+                    <span>¥ {{ $store.getters.getTotal.amount }}</span>
                 </p>
                 <p>运费：+ ¥ 0.00</p>
             </div>
@@ -84,10 +86,10 @@
 <style lang="scss" rel="stylesheet/scss">
     .order-header {
         height: 100px;
-        overflow-y: hidden;
+        // overflow-y: hidden;
         .nav {
             opacity: 0;
-
+            height: 0;
         }
         .top-header .search-box {
             .cart-box.slide {

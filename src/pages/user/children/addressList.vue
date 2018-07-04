@@ -181,11 +181,11 @@
             .v-enter, 
             .v-leave-to {
                 opacity: 0; 
-                transform: translateX(50px);
+                transform: translateX(40px);
             }
 
             .v-move {
-                transition: all 0.5s ease;
+                transition: all 0.1s ease;
             }
 
             .v-enter-active, 

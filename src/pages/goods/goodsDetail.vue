@@ -31,16 +31,23 @@
                         <span class="price">￥<i>{{ product.productPrice }}</i></span>
                     </h6>
                 </div>
-                
                 <div class="buy-num">
                     <span>数量</span>
-                    <buynum style="margin-left: 50px"></buynum>
+                    <buynum style="margin-left: 50px" @getcount="getBuyNum"></buynum>
                 </div>
                 <div class="buttons">
-                    <input type="button" name="" value="现在购买" readonly="readonly" />
+                    <input type="button" name="" value="加入购物车" readonly="readonly" @click='addToShopCar' />
                     <input type="button" name="" value="现在购买" readonly="readonly" />
                 </div>
 
+                <!-- 加入购物车动画 -->
+                <transition
+                    @before-enter="beforeEnter"
+                    @enter="enter"
+                    @afterEnter="afterEnter">
+                    <div class="ball" v-show="ballFlag" ref="ball"></div>
+                </transition>
+                
             </div>
         </div>
         <!-- 产品信息 -->
@@ -62,7 +69,9 @@
             return {
                 bigImgUrl: '',
                 detailImgUrl: '/static/images/big-product-detail01.jpg',
-                product:''
+                product:'',
+                ballFlag: false,
+                buyNum: 1
             }
         },
         created() {
@@ -73,7 +82,6 @@
             this.changeImg();
         },
         methods: {
-           
             // 点击小图片切换对应的大图片
             changeImg() {
                     var imgList = this.$refs.imgList;
@@ -88,6 +96,56 @@
                 // 从本地请求商品数据
                 this.product = JSON.parse(localStorage.getItem('products'));
                 this.bigImgUrl = this.product.productImgUrl;
+            }, 
+
+            // 加入购物车效果
+
+            addToShopCar() {
+                this.ballFlag = !this.ballFlag;
+
+                var goodsinfo = { 
+                                  id: this.product.id, 
+                                  productName: this.product.productName, 
+                                  productTitle: this.product.productTitle, 
+                                  productPrice: this.product.productPrice,
+                                  productImgUrl: this.product.productImgUrl,
+                                  count: this.buyNum,
+                                  selected: true
+                              }
+                this.$store.commit("addToCar", goodsinfo);
+            },
+            beforeEnter(el) {
+                el.style.transform = "translate(0,0)";
+            },
+            enter(el, done) {
+                el.offsetWidth;
+
+                // 获取小球的位置
+
+                const ballPosition = this.$refs.ball.getBoundingClientRect();
+
+                // 获取购物车徽标位置
+
+                const bagePosition = document.getElementById('bage').getBoundingClientRect();
+
+                const xDist = bagePosition.right - ballPosition.right; 
+                // console.log(xDist);
+                const yDist = bagePosition.top - ballPosition.top;
+                // console.log(yDist);
+
+                el.style.transform = `translate(${xDist}px,${yDist}px)`;
+                el.style.transition = "all 0.5s cubic-bezier(.4,-0.3,1,.68)";
+
+                done()
+            },
+            afterEnter (el) {
+                this.ballFlag = !this.ballFlag;
+            },
+
+            // 加入购物车的数量
+
+            getBuyNum(count) {
+                this.buyNum = count;
             }
         },
         components: {
@@ -183,7 +241,6 @@
                     color: #999;
                 }
             }
-            
             .buttons {
                 padding-top: 30px; 
                 border-top: 1px solid #ddd;
@@ -216,7 +273,18 @@
                         }
                     }
 
+                }
             }
+
+            .ball {
+                width: 15px; 
+                height: 15px; 
+                border-radius: 50%; 
+                background: red; 
+                position: absolute; 
+                top: 370px; 
+                right: 498px;
+                z-index: 6;
             }
         }
     }

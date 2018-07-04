@@ -3,86 +3,70 @@
         <mall-header class="cart-header"></mall-header>
         <div class="shopping-list w">
             <h2 class="title">购物清单</h2>
-            <div class="list-header">
-                <span class="name">商品信息</span>
-                <p class="fr">
-                    <span>单价</span>
-                    <span>数量</span>
-                    <span>小计</span>
-                    <span>操作</span>
-                </p>
-            </div>
-
-            <div class="cart-table">
-                <div class="items-choose">
-                    <div>
+            <div v-if="$store.getters.getAllCount != 0">
+                <div class="list-header">
+                    <span class="name">商品信息</span>
+                    <p class="fr">
+                        <span>单价</span>
+                        <span>数量</span>
+                        <span>小计</span>
+                        <span>操作</span>
+                    </p>
+                </div>
+                <div class="cart-table" v-for="(item,i) in goodsList" :key="item.id">
+                    <div class="items-choose">
+                        <div>
+                            <input type="checkbox" ref="checkbox" name="" class="selected" :checked="item.selected" @change="selectedChanged(item.id,i)" />
+                        </div>
+                        <div class="items-img">
+                            <img :src="item.productImgUrl" alt="" />
+                        </div>
+                        <div>
+                            <a href="#" class="items-name">{{ item.productName }}</a>
+                        </div>
+                    </div>
+                    <div class="fr items-info">
+                        <div>￥{{ item.productPrice }}</div>
+                        <div>
+                            <buynum :initcount="$store.getters.getGoodsCount[item.id]" :goodsId="item.id"></buynum>
+                        </div>
+                        <div>￥{{ item.count * item.productPrice }}</div>
+                        <div>
+                            <a href="javascript" class="iconfont icon-wrong items-del-btn" @click.prevent="delCarGoods(item.id, i)"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-bottom clearfix">
+                    <div class="fl all-check-box">
                         <input type="checkbox" name="" class="selected">
+                        <label>全选</label>
+                        <a href="javascript:;" class="delete-choose-goods">删除选中的商品</a>
                     </div>
-                    
-                    <div class="items-img">
-                        <img src="/static/images/product01.png" alt="" />
-                    </div>
-                    <div>
-                        <a href="#" class="items-name">Smartisan T恤 伍迪·艾伦出生</a>
-                    </div>
-                </div>
-                <div class="fr items-info">
-                    <div>￥149</div>
-                    <div>
-                        <buynum></buynum>
-                    </div>
-                    <div>￥298</div>
-                    <div>
-                        <a href="javascript" class="iconfont icon-wrong items-del-btn"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="cart-table">
-                <div class="items-choose">
-                    <div>
-                        <input type="checkbox" name="" class="selected">
-                    </div>
-                    <div class="items-img">
-                        <img src="/static/images/product01.png" alt="" />
-                    </div>
-                    <div>
-                        <a href="#" class="items-name">Smartisan T恤 伍迪·艾伦出生</a>
-                    </div>
-                </div>
-                <div class="fr items-info">
-                    <div>￥149</div>
-                    <div>
-                        <buynum></buynum>
-                    </div>
-                    <div>￥298</div>
-                    <div>
-                        <a href="javascript" class="iconfont icon-wrong items-del-btn"></a>
+                    <div class="fr shopping">
+                        <div class="shopping-total shopping-num">
+                            <h4 class="">已选择 <span class="num">{{ $store.getters.getTotal.count }}</span> 件商品</h4>
+                            <h6 class="shopping-tips">共计 {{ $store.getters.getAllCount }} 件商品</h6>
+                        </div>
+                        <div class="shopping-total shopping-price">
+                            <h4 class="">应付总额: <span class="price">￥{{ $store.getters.getTotal.amount }}</span></h4>
+                            <h6 class="shopping-tips">应付总额不含运费</h6>
+                        </div>
+                        <div class="fl">
+                            <router-link to="/checkout">
+                                <input type="button" readonly="readonly" value="现在结算" name="" class="now-buy-btn" />
+                            </router-link>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="cart-bottom clearfix">
-                <div class="fl all-check-box">
-                    <input type="checkbox" name="" class="selected">
-                    <label>全选</label>
-                    <a href="javascript:;" class="delete-choose-goods">删除选中的商品</a>
-                </div>
-                <div class="fr shopping">
-                    <div class="shopping-total shopping-num">
-                        <h4 class="">已选择 <span class="num">9</span> 件商品</h4>
-                        <h6 class="shopping-tips">共计 9 件商品</h6>
-                    </div>
-                    <div class="shopping-total shopping-price">
-                        <h4 class="">应付总额: <span class="price">￥1171</span></h4>
-                        <h6 class="shopping-tips">应付总额不含运费</h6>
-                    </div>
-                    <div class="fl">
-                        <router-link to="/checkout">
-                            <input type="button" readonly="readonly" value="现在结算" name="" class="now-buy-btn" />
-                        </router-link>
-                    </div>
+            <div v-if="$store.getters.getAllCount == 0">
+                <div class="no-goods">
+                    <img src="/assets/images/cart-empty.png" alt="" />
+                    <p>你的购物车空空如也</p>
+                    <router-link to="/goods" tag="a" class="go-buy-btn">现在选购</router-link>
                 </div>
             </div>
+            
         </div>
         <mall-footer></mall-footer>
     </div>
@@ -97,6 +81,23 @@ import buynum from '../components/buynum.vue'
     export default {
         data: function() {
             return {
+                goodsList: '',
+            }
+        },
+        created() {
+            this.getGoodsList();
+        },
+        methods: {
+            getGoodsList() {
+                this.goodsList = this.$store.state.car;
+            },
+            delCarGoods(id, index) {
+                this.goodsList.splice(index,1);
+                this.$store.commit('removeFormCar',id);
+            },
+            selectedChanged(id, i) {
+                var goodsSelected = { id: id, selected: this.$refs.checkbox[i].checked };
+                this.$store.commit('updateSelected', goodsSelected);
             }
         },
         components: {
@@ -110,9 +111,10 @@ import buynum from '../components/buynum.vue'
 <style lang="scss" rel="stylesheet/scss">
     .cart-header {
         height: 100px;
-        overflow-y: hidden;
+        // overflow-y: hidden;
         .nav {
             opacity: 0;
+            height: 0 !important;
         }
         .cart-box.slide {
             z-index: -1 !important;
@@ -281,6 +283,29 @@ import buynum from '../components/buynum.vue'
 
                 }
             }
+        }
+    }
+
+    .no-goods {
+        background: #fff; 
+        padding: 60px 0; 
+        text-align: center; 
+        color: rgb(141, 141, 141);
+        border-radius: 0 0 5px 5px;
+        border: 1px solid #ddd;
+        p {
+            font-weight: bold;
+            font-size: 16px;
+            margin: 20px 0;
+        }
+        .go-buy-btn {
+            display: inline-block; 
+            width: 120px; 
+            text-align: center; 
+            padding: 6px 0; 
+            border: 1px solid #ddd; 
+            border-radius: 5px;
+            color: #666;
         }
     }
 </style>

@@ -1,6 +1,7 @@
 <template>
     <div class="num-count">
         <button type="button" class="count-down" :class="{'down-disabled': downDisable}" @click="countDown" ref="down">-</button>
+        <!-- <input type="text" class="num" v-model="productNum" readonly="readonly" :value="initcount" />{{ productNum }} -->
         <span class="num" v-model="productNum">{{ productNum }}</span>
         <button type="button" class="count-up" @click="countUp">+</button>
     </div>
@@ -13,6 +14,10 @@
                 productNum: 1,
                 downDisable: true
             }
+        },
+        created() {
+            this.getInitCount();
+
         },
         methods: {
             countDown() {
@@ -33,8 +38,23 @@
                 if (this.downDisable) {
                     this.downDisable = !this.downDisable;
                 }
+            },
+            getInitCount() {
+                this.productNum = this.initcount || 1;
             }
-        }
+        },
+        watch: {
+            'productNum': function (newVal) {
+                this.$emit('getcount', newVal);
+                var goodsinfo = {
+                        id: this.goodsId,
+                        count: this.productNum
+                }
+                this.$store.commit('updateCarNum', goodsinfo)
+            }
+        },
+
+        props: ['initcount','goodsId']
     }
 </script>
 

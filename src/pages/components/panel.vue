@@ -29,7 +29,6 @@
          .panel {
             margin-bottom: 40px; 
             overflow: hidden;
-            // background: #fff;
             border-radius: 8px 8px 0 0;
             h2.title {
                 background: linear-gradient(#fbfbfb,#ececec);
@@ -40,8 +39,6 @@
                 font-weight: 400;
                 border: 1px solid #d4d4d4;
                 border-radius: 8px 8px 0 0;
-                // border-radius: 8px; 
-                // overflow: hidden;
             }
             .content {
                 overflow: hidden;

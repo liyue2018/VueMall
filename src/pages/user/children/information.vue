@@ -41,10 +41,16 @@
 
                 // 将该图片信息保存至本地存储
                 localStorage.setItem('submitImgUrl', JSON.stringify(this.submitImgUrl));
-
-
+                this.$emit('getImg');
             }
         },
+        computed: {
+            // 'submitImgUrl': function() {
+            //     return JSON.parse(localStorage.getItem('submitImgUrl'));
+
+            // }
+        },
+       
         components: {
             panel
         }

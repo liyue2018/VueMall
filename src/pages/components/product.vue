@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div v-for="(item,i) in product" :key="i" class="product-box">
-            <router-link :to="{ path:'/goodsDetails',query:{productId: item.id}}" tag="div" class="product-box-item">
-                <div class="item-img"  @click="getProductData(item.id)">
+        <router-link :to="{ path:'/goodsDetails',query:{productId: item.id}}" tag="div" class="product-box-item" v-for="(item,i) in product" :key="i">
+            <div  @click="getProductData(item.id)">
+                <div class="item-img">
                     <img src="" v-lazy="item.productImgUrl" alt="">
                     <h4>{{ item.productName }}</h4>
                     <h6 class="product-info">{{ item.productTitle }}</h6>
@@ -11,11 +11,11 @@
                     <i>￥</i>
                     <span>{{ item.productPrice }}</span>
                 </div>
-                <button class="btn-default">
+                <button class="btn-default" type="button">
                     查看详情
                 </button>
-            </router-link>
-        </div>
+            </div>
+        </router-link>
     </div>
     
 </template>
@@ -29,7 +29,6 @@
             }
         },
         created() {
-            
         },
         mounted() {
             this.getProductData();
@@ -51,6 +50,7 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
+
       .product-box-item {
         width: 305px;
         height: 430px;
@@ -58,6 +58,7 @@
         position: relative;
         transition: all 0.5s ease-out;
         float: left;
+        cursor: pointer;
         &:hover {
             box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.3);
             top: -1px;
@@ -102,7 +103,6 @@
             position: absolute; 
             bottom: 70px; 
             transition: all 0.5s ease;
-            // display: none;
             opacity: 0;
         }
     }

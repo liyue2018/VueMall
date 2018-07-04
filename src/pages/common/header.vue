@@ -21,12 +21,68 @@
                     </li>
                 </ul>
                 <div class="cart-box">
-                    <router-link to="/login" class="user">
+                    <router-link to="/login" class="user" @mouseenter.native="showUserCard" @mouseleave.native="hideUserCard">
                         <span class="iconfont icon-account"></span>
+                        <!-- 个人资料卡 -->
+                        <div class="user-card" v-show="userCardFlag">
+                            <div class="user-info">
+                                <img :src="$store.getters.getUserInfo" alt="">
+                                <p>test</p>
+                            </div>
+                            <ul class="user-list">
+                                <li class="item">
+                                    <router-link to="/user/orderList">我的订单</router-link>
+                                </li>
+                                <li class="item">
+                                    <router-link to="/user/information">账户资料</router-link>
+                                </li>
+                                <li class="item">
+                                    <router-link to="/user/addressList">收货地址</router-link>
+                                </li>
+                                <li class="item">
+                                    <router-link to="/user/coupon">我的优惠</router-link>
+                                </li>
+                                <li class="item">
+                                    <router-link to="/user/support">售后服务</router-link>
+                                </li>
+                                <li class="item">
+                                    <router-link to="/user/replace">以旧换新</router-link>
+                                </li>
+                            </ul>
+                        </div>
                     </router-link>
                     <router-link to="/cart" class="cart">
                         <span class="iconfont icon-cart"></span>
-                        <span class="iconnum">0</span>
+                        <span class="iconnum" id="bage">{{ this.$store.getters.getAllCount }}</span>
+
+                        <!-- 购物车卡 -->
+
+                        <div class="car-card">
+                            <ul class="card-content">
+                                <li class="item">
+                                    <a href="#">
+                                        <div class="product-img">
+                                            <img src="" alt="">
+                                        </div>
+                                        <div class="product-info">
+                                            <h5>支付测试商品</h5>
+                                            <p> <span class="price">￥ 199 </span><span class="count">x&nbsp;2</span></p>
+                                        </div>
+                                    </a>
+                                    <div class="del">
+                                        <input type="button" readonly="readonly" value="x" name="" class="del-btn" />
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="card-bottom">
+                                <div class="fl">
+                                    <p class="total-num">共计 4 件商品</p>
+                                    <p class="total-price">合计:<em>￥<i>400</i></em></p>
+                                </div>
+                                <a href="#" class="goTo-car-btn">去购物车</a>
+                            </div>
+                            
+                        </div>
                     </router-link>
                 </div>
             </div>
@@ -49,7 +105,8 @@
     export default {
         data: function () {
             return {
-                keywords: ''
+                keywords: '',
+                userCardFlag: false
             }
         },
         created () {
@@ -87,8 +144,16 @@
             },
             setkeywords(keywords) {
                 location.href = '/#/search?key=' + keywords;
+            },
 
-                // localStorage.setItem('keywords',JSON.stringify(this.keywords));
+            showUserCard() {
+                this.userCardFlag = !this.userCardFlag;
+            },
+
+            hideUserCard() {
+                if (this.userCardFlag) {
+                    this.userCardFlag = !this.userCardFlag;
+                }
             }
         }
         // props: ['flag']
@@ -152,37 +217,220 @@
                 }
                 .cart-box {
                     float: right;
-                    a {
+                    position: relative;
+                    .user,.cart {
                         display: inline-block;
                         font-weight: 700;
                         color: #c8c8c8;
+                        position: relative;
+                        &:hover {
+                            color: #fff;
+                        }
                     }
                     .user {
                         width: 30px;
                         margin-left: 30px;
                     }
                     .cart {
-                        position: relative;
                         .iconnum {
                             display: inline-block;
-                            width: 15px;
-                            height: 15px; 
-                            background: #f00; 
+                            width: 20px;
+                            height: 20px; 
+                            background: #e03939; 
                             border-radius: 50%;
                             font-size: 12px;
                             position: absolute; 
                             top: 35px;
                             left: 9px;
-                            line-height: 15px;
+                            line-height: 20px;
                             text-align: center;
                             color: #fff;
+                        }
+                    }
+
+                    // 加入购物车卡
+
+                    .car-card, .user-card {
+                        background: #fff; 
+                        border-radius: 5px; 
+                        box-shadow: 1px 8px 10px 1px rgba(0,0,0,.07); 
+                        position: absolute;
+                        line-height: 2.4;
+                        z-index: 7;
+                        &:before {
+                                content: ''; 
+                                display: block; 
+                                width: 0px; 
+                                height: 0px; 
+                                border: 10px solid #fff; 
+                                border-color: transparent transparent #fff transparent;
+                                position: absolute; 
+                            }
+                    }
+                    .car-card {
+                            top: 80px; 
+                            left: -252px;
+                             &:before {
+                                top: -20px; 
+                                left: 262px;
+                                transform: translateX(-50%);
+                            }
+                            .card-content {
+                                .item {
+                                    width: 380px; 
+                                    border-bottom: 1px solid #eee;
+                                    position: relative;
+                                    a {
+                                        display: block;
+                                        width: 100%; 
+                                        cursor: pointer; 
+                                        padding-bottom: 14px;
+                                        padding: 20px 20px 30px;
+                                        .product-img {
+                                            width: 80px; 
+                                            height: 80px; 
+                                            border-radius: 5px; 
+                                            border: 1px solid #eee; 
+                                            float: left; 
+                                            img {
+                                                width: 100%; 
+                                                height: 100%; 
+                                            }
+                                        }
+
+                                        .product-info {
+                                            margin-left: 100px;
+                                            h5 {
+                                                font-size: 14px; 
+                                                color: #668ee7;
+                                            }
+                                            .price {
+                                                color: #e03939; 
+                                                font-weight: 700;
+                                            }
+                                            .count {
+                                                color: #ddd; 
+                                                font-size: 12px; 
+                                                padding-left: 10px;
+                                            }
+                                        }
+
+                                        &:hover {
+                                            background: rgba(0,0,0,.02);
+                                        }
+                                    }
+                                }
+                            }
+
+                            .card-bottom {
+                                padding: 20px;
+                                line-height: 1;
+                                .total-num {
+                                    font-size: 12px; 
+                                    font-weight: normal;
+                                }
+                                .total-price {
+                                    font-weight: 500; 
+                                    color: #999; 
+                                    margin-top: 6px;
+                                    em {
+                                        color: #e03939; 
+                                        font-size: 12px; 
+                                        i {
+                                            font-size: 18px;
+                                        }
+                                    }
+
+                                }
+                                .goTo-car-btn {
+                                    display: block;
+                                    width: 116px;
+                                    height: 40px; 
+                                    line-height: 40px;
+                                    color: #fff; 
+                                    background-color: #678ee7;
+                                    background-image: linear-gradient(180deg,#678ee7,#5078df);
+                                    border: 1px solid #5c81e3; 
+                                    border-radius: 4px;
+                                    margin-left: 220px;
+                                    text-align: center;
+                                }
+
+                            }
+
+                            .del {
+                                position: absolute;
+                                top: 50px; 
+                                right: 40px;
+                                font-weight: 500;
+                                .del-btn {
+                                    width: 24px; 
+                                    height: 24px; 
+                                    line-height: 24px;
+                                    border-radius: 50%; 
+                                    border-color: #ddd;
+                                    text-align: center; 
+                                    float: right;
+                                    font-size: 14px; 
+                                    color: #ddd;
+                                }
+                            }
+
+                        }
+
+                    .user-card {
+                        width: 170px; 
+                        padding: 20px 0 0; 
+                        top: 75px; 
+                        left: -86px;
+                        text-align: center;
+                        color: #333;
+
+                        &:before {
+                            top: -20px; 
+                            left: 50%;
+                        }
+                        .user-info {
+                            img {
+                                width: 50px; 
+                                height: 50px; 
+                                border-radius: 50%; 
+                                border: 1px solid #eee; 
+                                padding: 2px;
+                                display: block;
+                                margin: 0 auto;
+                            }
+                            p {
+                                margin-top: 10px;
+                            }
+                        }
+
+                        .user-list {
+                            color: #333; 
+                            margin-top: 10px;
+                            li.item {
+                                height: 40px; 
+                                line-height: 40px; 
+                                a {
+                                    display: block; 
+                                    height: 100%; 
+                                    border: 1px solid #eee; 
+                                    border-width: 1px 0 0;
+                                    color: #333; 
+                                    font-size: 12px; 
+                                    font-weight: normal;
+                                    &:hover {
+                                        background: rgba(0,0,0,.02);
+                                    }
+                                }
+                            }
                         }
                     }
 
                 }
                 .cart-box.slide {
                         position: fixed;
-                        right: 20px; 
+                        right: 100px; 
                         top: -14px;
                         z-index: 4;
                         transition: all 0.2s ease-in-out;
